@@ -14,7 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            ground: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
             padding: 20px;
             min-height: 100vh;
         }
@@ -29,7 +29,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000 0%, #00B0F0 100%);
             color: white;
             padding: 30px;
         }
@@ -184,6 +184,7 @@
             background: #dcfce7;
             color: #16a34a;
         }
+      
 
         .btn-yes.active {
             background: #22c55e;
@@ -445,7 +446,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Évaluation de Maturité ESG</h1>
+            <h1>Questionnaire de Maturité ESG</h1>
             <p>Évaluez les pratiques Environnementales, Sociales et de Gouvernance de votre entreprise</p>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressBar"></div>
@@ -482,7 +483,7 @@
         <div id="resultsSection" class="content hidden">
             <div class="results-container">
                 <div class="results-header">
-                    <div class="results-icon">📊</div>
+                    <div class="results-icon"></div>
                     <h1 class="results-title">Résultats de l'Évaluation ESG</h1>
                     <p class="results-subtitle">Aperçu de la Performance ESG de votre Entreprise</p>
                 </div>
@@ -509,53 +510,56 @@
         const categories = [
             {
                 name: 'Environnemental',
-                icon: '🌱',
+                icon: '',
                 color: '#10b981',
                 questions: [
                     'Votre entreprise mesure-t-elle et suit-elle ses émissions de gaz à effet de serre ?',
-                    'Avez-vous des politiques et objectifs environnementaux documentés ?',
-                    'Votre entreprise utilise-t-elle des sources d\'énergie renouvelable ?',
-                    'Avez-vous un programme de réduction des déchets et de recyclage ?',
-                    'Votre entreprise réalise-t-elle des évaluations d\'impact environnemental ?',
-                    'Avez-vous des mesures de conservation de l\'eau en place ?',
-                    'Votre entreprise fixe-t-elle des objectifs climatiques basés sur la science ?',
-                    'Publiez-vous des données environnementales publiquement ?',
-                    'Votre entreprise a-t-elle une stratégie d\'économie circulaire ?',
-                    'Engagez-vous vos fournisseurs sur les normes environnementales ?'
+                    "Disposez vous d'une trajectoire de réduction de vos émissions de gaz à effet de serre ?",
+                    'Faites-vous la promotion de la mobilité douce ? '
+                  ,"Votre flotte automobile fait-elle l'objet d'une transition vers des véhicules électriques ?",
+                    "Disposez-vous d'une politique de tri des déchets ? ",
+                  "Les déchets dangereux font-ils l'objet d'un traitement particulier ? ",
+                    "Achetez-vous de l'énergie dites 'verte' ?",
+                    "Avez-vous des mesures de conservation de l'eau en place ?",
+          
+                    "Avez-vous déjà réalisé une ACV de vos biens ou services proposés à la vente ?",
+                    
+                    "L'ensemble de vos politiques environnemetales sont-elle documentées, suivies, objectivées ?"
                 ]
             },
             {
                 name: 'Social',
-                icon: '👥',
+                icon: '',
                 color: '#3b82f6',
                 questions: [
                     'Votre entreprise a-t-elle une politique de diversité et d\'inclusion ?',
                     'Proposez-vous des formations sur la santé et la sécurité des employés ?',
-                    'Votre entreprise offre-t-elle des salaires et avantages équitables ?',
-                    'Avez-vous des politiques anti-discrimination et anti-harcèlement ?',
-                    'Votre entreprise soutient-elle le développement et la formation des employés ?',
-                    'Mesurez-vous et suivez-vous la satisfaction des employés ?',
-                    'Votre entreprise s\'engage-t-elle auprès des communautés locales ?',
+                      "Disposez-vous d'indicateur de mesure des accidents du travail comme le taux de fréquence ou le taux de gravité ?",
+                    'Le résultat de votre index Égapro est-il supérieur à 85 points ?',
+                    'Avez-vous des politiques anti-discrimination et anti-harcèlement ?', 'Avez-vous des mécanismes de protection des lanceurs d\'alerte ?',
+                
+                    'Menez-vous des enquêtes de satisfaction auprès de vos clients comme des baromètres sociaux ?',
+                    "Disposez-vous d'un plan de formation ?",
                     'Avez-vous des politiques sur les droits humains pour votre chaîne d\'approvisionnement ?',
-                    'Votre entreprise favorise-t-elle l\'équilibre vie professionnelle-vie privée ?',
-                    'Avez-vous des mécanismes de protection des lanceurs d\'alerte ?'
+                    'Vos fournisseurs sont-ils engagés dans ces démarches ?'
+                   
                 ]
             },
             {
                 name: 'Gouvernance',
-                icon: '🏢',
+                icon: '',
                 color: '#8b5cf6',
                 questions: [
-                    'Votre conseil d\'administration compte-t-il des administrateurs indépendants ?',
-                    'Avez-vous un code d\'éthique et de conduite ?',
+                    'Disposez-vous d\'une politique d\'achats responsables ?',
+                    'Votre entreprise a-t-elle un code d\'éthique et de conduite ?',
                     'Votre entreprise a-t-elle des politiques anti-corruption ?',
-                    'Réalisez-vous des audits de conformité réguliers ?',
-                    'Votre conseil est-il diversifié (genre, compétences, parcours) ?',
+                    'Disposez-vous de certifications émanant d\'organismes reconnus ?',
+                    'Votre entreprise s\'engage-t-elle auprès des communautés locales et des territoires ?',
                     'Avez-vous des politiques transparentes de rémunération des dirigeants ?',
                     'Votre entreprise a-t-elle une politique de protection des données ?',
                     'Avez-vous des procédures de gestion des risques en place ?',
                     'Votre entreprise publie-t-elle des rapports de développement durable ?',
-                    'Avez-vous des processus d\'engagement des parties prenantes ?'
+                    'Avez-vous procédé à l\'identification de vos parties prenantes ?'
                 ]
             }
         ];
@@ -609,10 +613,10 @@
                             </div>
                             <div class="question-buttons">
                                 <button class="btn btn-yes ${answer === true ? 'active' : ''}" onclick="handleAnswer(${idx}, true)">
-                                    ✓ Oui
+                                     Oui
                                 </button>
                                 <button class="btn btn-no ${answer === false ? 'active' : ''}" onclick="handleAnswer(${idx}, false)">
-                                    ✗ Non
+                                     Non
                                 </button>
                             </div>
                         </div>
