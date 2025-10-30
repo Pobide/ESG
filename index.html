@@ -29,8 +29,8 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #000 0%, #00B0F0 100%);
-            color: white;
+            background: linear-gradient(135deg, #D9D9D9 0%, #00B0F0 100%);
+            color: ;
             padding: 30px;
         }
 
@@ -124,8 +124,8 @@
         }
 
         .question.answered {
-            background: #f0fdf4;
-            border-color: #86efac;
+            background: #E5F8FF;
+            border-color: #B7ECFF;
         }
 
         .question-header {
@@ -182,12 +182,12 @@
 
         .btn-yes:hover {
             background: #dcfce7;
-            color: #16a34a;
+            color: #00B050;
         }
       
 
         .btn-yes.active {
-            background: #22c55e;
+            background: #00B050;
             color: white;
             transform: scale(1.05);
         }
@@ -712,8 +712,8 @@
         }
 
         function getMaturityLevel(score) {
-            if (score >= 80) return { level: 'Avancé', color: '#10b981', description: 'Pratiques de pointe' };
-            if (score >= 60) return { level: 'Intermédiaire', color: '#3b82f6', description: 'Bons progrès' };
+            if (score >= 80) return { level: 'Avancé', color: '#10b981', description: 'Niveau de maturité élevé' };
+            if (score >= 60) return { level: 'Intermédiaire', color: '#3b82f6', description: 'Des bonnes bases qui peuvent cependant être améliorées' };
             if (score >= 40) return { level: 'En développement', color: '#f59e0b', description: 'Fondations en construction' };
             return { level: 'Initial', color: '#ef4444', description: 'Premières étapes' };
         }
@@ -761,7 +761,7 @@
                     recommendations += `
                         <div class="recommendation-item">
                             <div class="recommendation-dot" style="background-color: ${score.color}"></div>
-                            <div><strong>${score.category} :</strong> Envisagez de développer des politiques et pratiques plus complètes pour améliorer la maturité dans ce domaine.</div>
+                            <div><strong>${score.category} :</strong> Envisagez un accompagnement avec le Groupe Y afin de devenir des rock-stars de la thématique.</div>
                         </div>
                     `;
                 }
@@ -770,7 +770,7 @@
                 recommendations += `
                     <div class="recommendation-item">
                         <div class="recommendation-dot" style="background-color: #10b981"></div>
-                        <div>Solide fondation ESG. Concentrez-vous sur l'amélioration continue et l'adoption de pratiques de pointe.</div>
+                        <div>Vous disposez de solides fondations. Un approfondissement du diagnositic peut être envisagé afin de cibler des axes de progrés plus précis.</div>
                     </div>
                 `;
             }
