@@ -311,7 +311,7 @@
         }
 
         .overall-score {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+           background: linear-gradient(135deg, #D9D9D9 0%, #00B0F0 100%);
             border-radius: 16px;
             padding: 30px;
             color: white;
@@ -490,12 +490,37 @@
 
                 <div class="overall-score" id="overallScoreCard"></div>
 
-                <div class="charts-container">
-                    <div class="chart-wrapper">
-                        <h3 class="chart-title">Scores par Catégorie</h3>
-                        <canvas id="barChart" height="100"></canvas>
-                    </div>
-                </div>
+<div class="charts-container">
+    <div class="chart-wrapper">
+        <h3 class="chart-title">Scores par Catégorie</h3>
+        <canvas id="barChart" height="100"></canvas>
+    </div>
+
+    <div class="chart-wrapper">
+        <h3 class="chart-title">Profil ESG (Radar)</h3>
+        <canvas id="radarChart" height="120"></canvas>
+    </div>
+
+    <div class="chart-wrapper">
+        <h3 class="chart-title">Maturité par Thématique</h3>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+            <div style="text-align:center;">
+                <canvas id="donutEnv" width="150" height="150"></canvas>
+                <p style="margin-top:10px; font-weight:600; color:#10b981;">Environnemental</p>
+            </div>
+            <div style="text-align:center;">
+                <canvas id="donutSoc" width="150" height="150"></canvas>
+                <p style="margin-top:10px; font-weight:600; color:#3b82f6;">Social</p>
+            </div>
+            <div style="text-align:center;">
+                <canvas id="donutGov" width="150" height="150"></canvas>
+                <p style="margin-top:10px; font-weight:600; color:#8b5cf6;">Gouvernance</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
                 <div class="category-cards" id="categoryCards"></div>
 
@@ -777,50 +802,154 @@
             document.getElementById('recommendations').innerHTML = recommendations;
             
             // Bar Chart
-            renderBarChart(scores);
+            renderCharts(scores);
         }
 
-        function renderBarChart(scores) {
-            const ctx = document.getElementById('barChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: scores.map(s => s.category),
-                    datasets: [{
-                        label: 'Score (%)',
-                        data: scores.map(s => s.score),
-                        backgroundColor: scores.map(s => s.color),
-                        borderRadius: 8
-                    }]
+      // On garde une référence globale pour pouvoir détruire les anciens graphiques
+let chartInstances = [];
+
+function renderCharts(scores) {
+    // Réinitialisation : détruire les anciens graphiques avant d’en recréer
+    chartInstances.forEach(chart => chart.destroy());
+    chartInstances = [];
+
+    // ---- BAR CHART ----
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const barChart = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: scores.map(s => s.category),
+            datasets: [{
+                label: 'Score (%)',
+                data: scores.map(s => s.score),
+                backgroundColor: scores.map(s => s.color),
+                borderRadius: 10,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { callback: value => value + '%' },
+                    grid: { color: '#e5e7eb' }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: false
+                x: { grid: { display: false } }
+            }
+        }
+    });
+    chartInstances.push(barChart);
+
+    // ---- RADAR CHART (GRAPHE ARAIGNÉE) ----
+    const radarCtx = document.getElementById('radarChart').getContext('2d');
+    const radarChart = new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+            labels: scores.map(s => s.category),
+            datasets: [{
+                label: 'Score ESG',
+                data: scores.map(s => s.score),
+                fill: true,
+                backgroundColor: 'rgba(59, 130, 246, 0.15)',
+                borderColor: '#3b82f6',
+                pointBackgroundColor: scores.map(s => s.color),
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: '#3b82f6'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { display: false },
+                    grid: { color: '#d1d5db' },
+                    pointLabels: { color: '#374151', font: { size: 14 } }
+                }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+    chartInstances.push(radarChart);
+
+    // ---- DONUTS INDIVIDUELS ----
+    const donutIDs = ['donutEnv', 'donutSoc', 'donutGov'];
+    scores.forEach((score, i) => {
+        const ctx = document.getElementById(donutIDs[i]).getContext('2d');
+        const donutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Score', 'Reste'],
+                datasets: [{
+                    data: [score.score, 100 - score.score],
+                    backgroundColor: [score.color, '#e5e7eb'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: context => context.label === 'Score' 
+                                ? `${score.category}: ${score.score.toFixed(1)}%`
+                                : ''
                         }
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
+                    // Ajout d’un texte centré (score %) dans le donut
+                    beforeDraw(chart) {
+                        const { width } = chart;
+                        const ctx = chart.ctx;
+                        ctx.restore();
+                        ctx.font = 'bold 18px sans-serif';
+                        ctx.fillStyle = '#111827';
+                        ctx.textBaseline = 'middle';
+                        const text = `${score.score.toFixed(0)}%`;
+                        const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                        const textY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 1.7;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
                     }
                 }
-            });
-        }
+            },
+            plugins: [{
+                id: 'textCenter',
+                beforeDraw(chart) {
+                    const { width } = chart;
+                    const ctx = chart.ctx;
+                    ctx.restore();
+                    ctx.font = 'bold 18px sans-serif';
+                    ctx.fillStyle = '#111827';
+                    ctx.textBaseline = 'middle';
+                    const text = `${score.score.toFixed(0)}%`;
+                    const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                    const textY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 1.7;
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }]
+        });
+        chartInstances.push(donutChart);
+    });
+}
+
+
 
         function resetQuestionnaire() {
             answers = {};
             currentCategory = 0;
             document.getElementById('questionnaireSection').classList.remove('hidden');
             document.getElementById('resultsSection').classList.add('hidden');
+            chartInstances.forEach(chart => chart.destroy());
+            chartInstances = [];
             initQuestionnaire();
         }
 
