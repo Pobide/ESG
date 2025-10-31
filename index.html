@@ -23,8 +23,8 @@
     }
 
     .container {
-      max-width: 900px;
-      width: 100%;
+      width: 85%;
+      max-width: 1200px;
       background: white;
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
@@ -51,25 +51,28 @@
     }
 
     .content {
-      padding: 20px 20px;
+      padding: 50px 40px;
     }
 
     .grid {
-      display: flex;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
       margin-bottom: 20px;
     }
 
     .card {
       border-radius: 16px;
-      padding: 35px 25px;
+      padding: 0;
       transition: all 0.3s ease;
       cursor: pointer;
       border: 3px solid;
-      text-align: center;
+      text-align: left;
       position: relative;
       overflow: hidden;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
     }
 
     .card::before {
@@ -92,17 +95,134 @@
       opacity: 0.05;
     }
 
+    .card-header {
+      padding: 30px 30px 20px;
+    }
+
+    .card-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      height: 100px;
+    }
+
+    .card-image {
+      max-width: 100px;
+      max-height: 100px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    }
+
     .card h2 {
-      font-size: 22px;
+      font-size: 24px;
       color: #1f2937;
       margin-bottom: 12px;
       font-weight: 600;
     }
 
-    .card p {
+    .card-description {
       font-size: 14px;
       color: #6b7280;
       line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card-preview {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 20px 30px;
+      border-top: 2px solid rgba(0, 0, 0, 0.05);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .preview-section {
+      margin-bottom: 20px;
+    }
+
+    .preview-section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .preview-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .preview-items {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .preview-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #4b5563;
+    }
+
+    .preview-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    .preview-check::after {
+      content: '✓';
+      color: white;
+      font-weight: bold;
+    }
+
+    .preview-stats {
+      display: flex;
+      justify-content: center;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      margin-top: 15px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1f2937;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .cta-button {
+      margin: 20px 30px 30px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      text-align: center;
+      color: white;
+      transition: all 0.2s;
     }
 
     .esg {
@@ -110,13 +230,20 @@
       border-color: #B7ECFF;
     }
 
-    .esg .card-icon {
-      background: #00B0F0;
-      color: white;
-    }
-
     .esg::before {
       background: #00B0F0;
+    }
+
+    .esg .preview-check {
+      background: #00B0F0;
+    }
+
+    .esg .cta-button {
+      background: #00B0F0;
+    }
+
+    .esg .cta-button:hover {
+      background: #0099CC;
     }
 
     .q2 {
@@ -124,13 +251,20 @@
       border-color: #bbf7d0;
     }
 
-    .q2 .card-icon {
-      background: #00B050;
-      color: white;
-    }
-
     .q2::before {
       background: #00B050;
+    }
+
+    .q2 .preview-check {
+      background: #00B050;
+    }
+
+    .q2 .cta-button {
+      background: #00B050;
+    }
+
+    .q2 .cta-button:hover {
+      background: #16a34a;
     }
 
     footer {
@@ -149,17 +283,32 @@
       display: block;
     }
 
-    @media (max-width: 768px) {
-      .header h1 {
-        font-size: 26px;
+    @media (max-width: 968px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        width: 95%;
       }
 
       .content {
         padding: 30px 20px;
       }
+    }
 
-      .grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 26px;
+      }
+
+      .card {
+        min-height: auto;
+      }
+
+      .card-image {
+        max-width: 80px;
+        max-height: 80px;
       }
     }
   </style>
@@ -167,7 +316,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Plateforme de diagnostics ESG du Groupe Y</h1>
+      <h1>Plateforme de diagnostics ESG</h1>
       <p>Sélectionnez ci-dessous la thématique pour laquelle vous souhaitez réaliser un diagnostic</p>
     </div>
 
@@ -175,17 +324,123 @@
       <div class="grid">
         <a href="questionnaires/questionnaire_1.html">
           <div class="card esg">
-         
-            <h2>Questionnaire de Maturité ESG</h2>
-            <p>Évaluez vos pratiques environnementales, sociales et de gouvernance</p>
+            <div class="card-header">
+              <div class="card-image-container">
+                <img src="assets/images/saut.png" alt="ESG" class="card-image">
+              </div>
+              <h2>Questionnaire de maturité ESG</h2>
+              <p class="card-description">Évaluez vos pratiques environnementales, sociales et de gouvernance</p>
+            </div>
+            
+            <div class="card-preview">
+              <div class="preview-section">
+                <div class="preview-title">Aperçu du questionnaire</div>
+                <div class="preview-items">
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Impact environnemental</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Responsabilité sociale</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Responsabilité sociétale</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="preview-section">
+                <div class="preview-title">Restitution</div>
+                <div class="preview-items">
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Analyse du niveau de maturité ESG</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Analyse sectorielle</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Recommandations personnalisées</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="preview-stats">
+                <div class="stat">
+                  <span class="stat-value">~10</span>
+                  <span class="stat-label">Minutes</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-button">
+              Démarrer l'évaluation
+            </div>
           </div>
         </a>
 
         <a href="questionnaires/questionnaire_2.html">
           <div class="card q2">
+            <div class="card-header">
+              <div class="card-image-container">
+                <img src="assets/images/foret_tyro.png" alt="Carbone" class="card-image">
+              </div>
+              <h2>Diag'Carbone</h2>
+              <p class="card-description">Faites le point sur votre impact carbone en 10 minutes et découvrez comment allier performance, économies et engagement durable</p>
+            </div>
+            
+            <div class="card-preview">
+              <div class="preview-section">
+                <div class="preview-title">Aperçu du questionnaire</div>
+                <div class="preview-items">
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Prise de connaissance de l'entité</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Émissions de gaz à effet de serre</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Diag Decarbon'Action</span>
+                  </div>
+                </div>
+              </div>
 
-            <h2>Questionnaire N°2</h2>
-            <p>Un nouveau diagnostic sur une autre thématique (à définir)</p>
+              <div class="preview-section">
+                <div class="preview-title">Restitution</div>
+                <div class="preview-items">
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Analyse du niveau de performance</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Benchmarking sectoriel</span>
+                  </div>
+                  <div class="preview-item">
+                    <div class="preview-check"></div>
+                    <span>Recommandations personnalisées</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="preview-stats">
+                <div class="stat">
+                  <span class="stat-value">~10</span>
+                  <span class="stat-label">Minutes</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta-button">
+              Démarrer le diagnostic
+            </div>
           </div>
         </a>
       </div>
