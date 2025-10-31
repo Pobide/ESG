@@ -71,7 +71,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 5px;
-      transition: height .3s ease;
+      transition: height .5s ease;
     }
 
     .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
@@ -211,12 +211,12 @@
       font-size: 15px;
       text-align: center;
       color: white;
-      transition: all .2s;
+      transition: all .4s;
       position: relative;
       z-index: 2;
     }
 
-    /* variants */
+   
     .esg { background: #E5F8FF; border-color: #B7ECFF; }
     .esg::before { background: #00B0F0; }
     .esg .preview-check { background: #00B0F0; }
@@ -227,7 +227,7 @@
     .q2::before { background: #00B050; }
     .q2 .preview-check { background: #00B050; }
     .q2 .cta-button { background: #00B050; }
-    .q2 .cta-button:hover { background: #16a34a; }
+    .q2 .cta-button:hover { background: #159743; }
 
     footer {
       text-align: center;
@@ -241,7 +241,7 @@
 
     a { text-decoration: none; color: inherit; display: block; }
 
-    /* responsive tweaks */
+    
     @media (max-width: 968px) {
       .grid { grid-template-columns: 1fr; }
       .container { width: 95%; }
@@ -266,7 +266,7 @@
       <div class="grid">
         <a href="questionnaires/questionnaire_1.html">
           <div class="card esg">
-            <!-- IMAGE placée en dehors du flow (absolute) pour ignorer le padding du parent -->
+           
             <div class="card-media">
               <img src="items/saut.png" alt="ESG" class="card-image">
             </div>
@@ -333,7 +333,7 @@
 
             <div class="card-header">
               <h2>Diag'Carbone</h2>
-              <p class="card-description">Faites le point sur votre impact carbone en 10 minutes et découvrez comment allier performance, économies et engagement durable</p>
+              <p class="card-description">Découvrez comment allier performance et engagement durable</p>
             </div>
 
             <div class="card-preview">
