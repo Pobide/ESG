@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évaluation de Maturité ESG</title>
+    <title>Évaluation maturité ESG</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * {
@@ -29,7 +29,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #D9D9D9 0%, #00B0F0 100%);
+            background: linear-gradient(135deg, #00B0F0 0%, #D9D9D9 100%);
             color: ;
             padding: 30px;
         }
@@ -37,11 +37,16 @@
         .header h1 {
             font-size: 28px;
             margin-bottom: 10px;
+            color : white ;
+          
+          
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 14px;
+            font-size: 15px;
+            color : white ;
+          
         }
 
         .progress-bar {
@@ -56,7 +61,7 @@
             background: white;
             height: 100%;
             border-radius: 10px;
-            transition: width 0.5s ease;
+            color : white ;ition: width 0.5s ease;
         }
 
         .content {
@@ -286,7 +291,7 @@
             border-radius: 6px;
         }
 
-        /* Results Page */
+        
         .results-container {
             text-align: center;
         }
@@ -441,12 +446,13 @@
         .hidden {
             display: none;
         }
+      
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Questionnaire de Maturité ESG</h1>
+            <h1>Questionnaire de maturité ESG</h1>
             <p>Évaluez les pratiques Environnementales, Sociales et de Gouvernance de votre entreprise</p>
             <div class="progress-bar">
                 <div class="progress-fill" id="progressBar"></div>
@@ -478,6 +484,11 @@
             <div class="nav-hint" id="navHint">Veuillez répondre à toutes les questions pour continuer</div>
 
             <div class="category-dots" id="categoryDots"></div>
+          <div style="display: flex; justify-content: center; margin-top: 20px;">
+    <button class="btn-nav btn-prev" onclick="window.location.href='index.html'">Revenir à l'accueil
+    </button>
+</div>
+
         </div>
 
         <div id="resultsSection" class="content hidden">
@@ -527,6 +538,10 @@
                 <div class="recommendations" id="recommendations"></div>
 
                 <button class="btn-nav btn-next" onclick="resetQuestionnaire()">Nouvelle Évaluation</button>
+                   <div style="display: flex; justify-content: center; margin-top: 20px;">
+    <button class="btn-nav btn-prev" onclick="window.location.href='index.html'">Revenir à l'accueil
+    </button>
+</div>
             </div>
         </div>
     </div>
