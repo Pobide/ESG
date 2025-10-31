@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portail des Questionnaires</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
@@ -13,118 +19,181 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 0;
       padding: 20px;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 900px;
+      width: 100%;
       background: white;
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #D9D9D9 0%, #00B0F0 100%);
+      color: white;
       padding: 40px;
       text-align: center;
     }
 
-    h1 {
+    .header h1 {
       font-size: 32px;
-      background: linear-gradient(135deg, #00B0F0, #0099CC);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-weight: 600;
     }
 
-    p {
-      color: #6b7280;
-      margin-bottom: 40px;
+    .header p {
+      opacity: 0.95;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .content {
+      padding: 20px 20px;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      display: flex;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 20px;
     }
 
     .card {
       border-radius: 16px;
-      padding: 30px 20px;
+      padding: 35px 25px;
       transition: all 0.3s ease;
       cursor: pointer;
-      border: 2px solid transparent;
+      border: 3px solid;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      transition: height 0.3s ease;
     }
 
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     }
 
-    .card img {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 15px;
+    .card:hover::before {
+      height: 100%;
+      opacity: 0.05;
     }
 
     .card h2 {
-      font-size: 20px;
+      font-size: 22px;
       color: #1f2937;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-weight: 600;
     }
 
     .card p {
       font-size: 14px;
       color: #6b7280;
+      line-height: 1.6;
     }
 
     .esg {
       background: #E5F8FF;
-      border-color: #00B0F0;
+      border-color: #B7ECFF;
+    }
+
+    .esg .card-icon {
+      background: #00B0F0;
+      color: white;
+    }
+
+    .esg::before {
+      background: #00B0F0;
     }
 
     .q2 {
-      background: #E9FAEF;
-      border-color: #10B981;
+      background: #dcfce7;
+      border-color: #bbf7d0;
+    }
+
+    .q2 .card-icon {
+      background: #00B050;
+      color: white;
+    }
+
+    .q2::before {
+      background: #00B050;
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 12px;
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
       color: #9ca3af;
+      border-top: 2px solid #e5e7eb;
+      background: white;
+      border-radius: 0 0 20px 20px;
     }
 
     a {
       text-decoration: none;
       color: inherit;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 26px;
+      }
+
+      .content {
+        padding: 30px 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h1>Bienvenue sur le Portail des Questionnaires</h1>
-    <p>Sélectionnez le questionnaire que vous souhaitez remplir :</p>
-
-    <div class="grid">
-      <a href="questionnaires/questionnaire_1.html">
-        <div class="card esg">
-          <img src="assets/images/esg-icon.png" alt="ESG">
-          <h2>Questionnaire de Maturité ESG</h2>
-          <p>Évaluez vos pratiques environnementales, sociales et de gouvernance.</p>
-        </div>
-      </a>
-
-      <a href="questionnaires/questionnaire_2.html">
-        <div class="card q2">
-          <img src="assets/images/q2-icon.png" alt="Autre questionnaire">
-          <h2>Questionnaire N°2</h2>
-          <p>Un nouveau diagnostic sur une autre thématique (à définir).</p>
-        </div>
-      </a>
+    <div class="header">
+      <h1>Plateforme de diagnostics ESG du Groupe Y</h1>
+      <p>Sélectionnez ci-dessous la thématique pour laquelle vous souhaitez réaliser un diagnostic</p>
     </div>
+
+    <div class="content">
+      <div class="grid">
+        <a href="questionnaires/questionnaire_1.html">
+          <div class="card esg">
+         
+            <h2>Questionnaire de Maturité ESG</h2>
+            <p>Évaluez vos pratiques environnementales, sociales et de gouvernance</p>
+          </div>
+        </a>
+
+        <a href="questionnaires/questionnaire_2.html">
+          <div class="card q2">
+
+            <h2>Questionnaire N°2</h2>
+            <p>Un nouveau diagnostic sur une autre thématique (à définir)</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 – Groupe Y | Tous droits réservés
+    </footer>
   </div>
-
-  <footer>
-    © 2025 – Votre organisation | Tous droits réservés
-  </footer>
-
 </body>
 </html>
