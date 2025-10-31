@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Portail des Questionnaires</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --card-media-height: 240px; 
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg,#f5f7fa 0%,#e4e8ec 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -27,90 +27,69 @@
       max-width: 1200px;
       background: white;
       border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
       overflow: hidden;
     }
 
     .header {
-      background: linear-gradient(135deg, #D9D9D9 0%, #00B0F0 100%);
+      background: linear-gradient(135deg,#D9D9D9 0%,#00B0F0 100%);
       color: white;
       padding: 40px;
       text-align: center;
     }
 
-    .header h1 {
-      font-size: 32px;
-      margin-bottom: 15px;
-      font-weight: 600;
-    }
+    .header h1 { font-size: 32px; margin-bottom: 15px; font-weight: 600; }
+    .header p { opacity: 0.95; font-size: 16px; line-height: 1.5; }
 
-    .header p {
-      opacity: 0.95;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .content {
-      padding: 50px 40px;
-    }
+    .content { padding: 50px 40px; }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2,1fr);
       gap: 30px;
       margin-bottom: 20px;
     }
 
+   
     .card {
       border-radius: 16px;
       padding: 0;
-      transition: all 0.3s ease;
+      transition: all .3s ease;
       cursor: pointer;
       border: 3px solid;
       text-align: left;
-      position: relative;
-      overflow: hidden;
+      position: relative; 
+      overflow: hidden;  
       min-height: 520px;
       display: flex;
       flex-direction: column;
+      background-clip: padding-box;
     }
 
     .card::before {
-      content: '';
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      transition: height .3s ease;
+    }
+
+    .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+    .card:hover::before { height: 100%; opacity: 0.05; }
+
+    
+    .card-media {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 5px;
-      transition: height 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .card:hover::before {
-      height: 100%;
-      opacity: 0.05;
-    }
-
-    .card-header {
-      padding: 30px 30px 20px;
-    }
-
-
-    .card-image-container {
-      position: relative;
-      width: 100%;
-      height: 200px;
+      height: var(--card-media-height);
       overflow: hidden;
-      border-radius: 16px 16px 0 0; 
-      margin: 0;         
-      padding: 0;        
+      border-radius: 16px 16px 0 0; /* arrondi haut */
+      z-index: 1;
     }
 
-    .card-image {
+    .card-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -118,25 +97,39 @@
       border-radius: inherit;
       margin: 0;
       padding: 0;
+      transform: translateZ(0); 
     }
 
 
-      .card-image-container::after {
+    .card-media::after{
       content: "";
       position: absolute;
       inset: 0;
       border-radius: inherit;
       pointer-events: none;
-      background: 
-        linear-gradient(to bottom, rgba(255,255,255,0) 70%, rgba(255,255,255,1) 100%);
+      
+      background:
+        radial-gradient(circle at 50% -30%,
+          rgba(255,255,255,0) 35%,
+          rgba(255,255,255,0.35) 60%,
+          rgba(255,255,255,0.65) 82%,
+          rgba(255,255,255,0.9) 100%),
+        linear-gradient(to bottom, rgba(255,255,255,0) 55%, rgba(255,255,255,0.95) 100%);
+      mix-blend-mode: lighten;
     }
 
+
+    .card-header {
+      padding: calc(var(--card-media-height) + 20px) 30px 20px; 
+      position: relative;
+      z-index: 2; 
+    }
 
     .card h2 {
       font-size: 24px;
       color: #1f2937;
       margin-bottom: 12px;
-      margin-top: 5px
+      margin-top: 5px;
       font-weight: 600;
     }
 
@@ -148,22 +141,19 @@
     }
 
     .card-preview {
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255,255,255,0.5);
       padding: 20px 30px;
-      border-top: 2px solid rgba(0, 0, 0, 0.05);
+      border-top: 2px solid rgba(0,0,0,0.05);
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+      z-index: 2;
     }
 
-    .preview-section {
-      margin-bottom: 20px;
-    }
-
-    .preview-section:last-of-type {
-      margin-bottom: 0;
-    }
+    .preview-section { margin-bottom: 20px; }
+    .preview-section:last-of-type { margin-bottom: 0; }
 
     .preview-title {
       font-size: 12px;
@@ -174,11 +164,7 @@
       letter-spacing: 0.5px;
     }
 
-    .preview-items {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .preview-items { display: flex; flex-direction: column; gap: 8px; }
 
     .preview-item {
       display: flex;
@@ -200,7 +186,7 @@
     }
 
     .preview-check::after {
-      content: '✓';
+      content: "✓";
       color: white;
       font-weight: bold;
     }
@@ -209,29 +195,13 @@
       display: flex;
       justify-content: center;
       padding-top: 15px;
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: 1px solid rgba(0,0,0,0.1);
       margin-top: 15px;
     }
 
-    .stat {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1f2937;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 4px;
-      display: block;
-    }
+    .stat { text-align: center; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #1f2937; display: block; }
+    .stat-label { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block; }
 
     .cta-button {
       margin: 20px 30px 30px;
@@ -241,50 +211,23 @@
       font-size: 15px;
       text-align: center;
       color: white;
-      transition: all 0.2s;
+      transition: all .2s;
+      position: relative;
+      z-index: 2;
     }
 
-    .esg {
-      background: #E5F8FF;
-      border-color: #B7ECFF;
-    }
+    /* variants */
+    .esg { background: #E5F8FF; border-color: #B7ECFF; }
+    .esg::before { background: #00B0F0; }
+    .esg .preview-check { background: #00B0F0; }
+    .esg .cta-button { background: #00B0F0; }
+    .esg .cta-button:hover { background: #0099CC; }
 
-    .esg::before {
-      background: #00B0F0;
-    }
-
-    .esg .preview-check {
-      background: #00B0F0;
-    }
-
-    .esg .cta-button {
-      background: #00B0F0;
-    }
-
-    .esg .cta-button:hover {
-      background: #0099CC;
-    }
-
-    .q2 {
-      background: #dcfce7;
-      border-color: #bbf7d0;
-    }
-
-    .q2::before {
-      background: #00B050;
-    }
-
-    .q2 .preview-check {
-      background: #00B050;
-    }
-
-    .q2 .cta-button {
-      background: #00B050;
-    }
-
-    .q2 .cta-button:hover {
-      background: #16a34a;
-    }
+    .q2 { background: #dcfce7; border-color: #bbf7d0; }
+    .q2::before { background: #00B050; }
+    .q2 .preview-check { background: #00B050; }
+    .q2 .cta-button { background: #00B050; }
+    .q2 .cta-button:hover { background: #16a34a; }
 
     footer {
       text-align: center;
@@ -296,39 +239,19 @@
       border-radius: 0 0 20px 20px;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
+    a { text-decoration: none; color: inherit; display: block; }
 
+    /* responsive tweaks */
     @media (max-width: 968px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .container {
-        width: 95%;
-      }
-
-      .content {
-        padding: 30px 20px;
-      }
+      .grid { grid-template-columns: 1fr; }
+      .container { width: 95%; }
+      .content { padding: 30px 20px; }
     }
 
     @media (max-width: 768px) {
-      .header h1 {
-        font-size: 26px;
-      }
-
-      .card {
-        min-height: auto;
-      }
-
-      .card-image {
-        max-width: 80px;
-        max-height: 80px;
-      }
+      :root { --card-media-height: 160px; }
+      .header h1 { font-size: 26px; }
+      .card { min-height: auto; }
     }
   </style>
 </head>
@@ -343,14 +266,16 @@
       <div class="grid">
         <a href="questionnaires/questionnaire_1.html">
           <div class="card esg">
+            <!-- IMAGE placée en dehors du flow (absolute) pour ignorer le padding du parent -->
+            <div class="card-media">
+              <img src="items/saut.png" alt="ESG" class="card-image">
+            </div>
+
             <div class="card-header">
-              <div class="card-image-container">
-                <img src="items/saut.png" alt="ESG" class="card-image">
-              </div>
               <h2>Questionnaire de maturité ESG</h2>
               <p class="card-description">Évaluez vos pratiques environnementales, sociales et de gouvernance</p>
             </div>
-            
+
             <div class="card-preview">
               <div class="preview-section">
                 <div class="preview-title">Aperçu du questionnaire</div>
@@ -369,7 +294,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="preview-section">
                 <div class="preview-title">Restitution</div>
                 <div class="preview-items">
@@ -396,22 +321,21 @@
               </div>
             </div>
 
-            <div class="cta-button">
-              Démarrer l'évaluation
-            </div>
+            <div class="cta-button">Démarrer l'évaluation</div>
           </div>
         </a>
 
         <a href="questionnaires/questionnaire_2.html">
           <div class="card q2">
+            <div class="card-media">
+              <img src="items/foret_tyro.png" alt="Carbone" class="card-image">
+            </div>
+
             <div class="card-header">
-              <div class="card-image-container">
-                <img src="items/foret_tyro.png" alt="Carbone" class="card-image">
-              </div>
               <h2>Diag'Carbone</h2>
               <p class="card-description">Faites le point sur votre impact carbone en 10 minutes et découvrez comment allier performance, économies et engagement durable</p>
             </div>
-            
+
             <div class="card-preview">
               <div class="preview-section">
                 <div class="preview-title">Aperçu du questionnaire</div>
@@ -448,7 +372,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="preview-stats">
                 <div class="stat">
                   <span class="stat-value">~10</span>
@@ -457,17 +381,13 @@
               </div>
             </div>
 
-            <div class="cta-button">
-              Démarrer le diagnostic
-            </div>
+            <div class="cta-button">Démarrer le diagnostic</div>
           </div>
         </a>
       </div>
     </div>
 
-    <footer>
-      © 2025 – Groupe Y | Tous droits réservés
-    </footer>
+    <footer>© 2025 – Groupe Y | Tous droits réservés</footer>
   </div>
 </body>
 </html>
